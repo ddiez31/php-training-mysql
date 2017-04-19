@@ -32,3 +32,10 @@ CREATE TABLE IF NOT EXISTS `hiking` (
   `height_difference` int(6) NOT NULL COMMENT 'in m',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO `hiking` (`name`, `difficulty`, `distance`, `duration`, `height_difference`)
+VALUES  ('Le tour du Morne Langevin', 'très facile', '7km', '5:00:00', '350m'),
+        ('Une boucle à Granite Gorge', 'facile', '2.8km', '1:30:00', '-'),
+        ('De la Plaine des Sables au Piton de Bert', 'moyen', '13km', '3:30:00', '140m'),
+        ('De Saint-Joseph au Nez de Boeuf par Roche Plate', 'difficile', '24.5km', '7:30:00', '2150m'),
+        ('La Forêt du Tapcal depuis l\'Ilet Totor', 'très difficile', '7.5km', '6:15:00', '720m');
