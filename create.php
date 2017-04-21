@@ -7,8 +7,8 @@
 	<link rel="stylesheet" href="css/basics.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-	<a href="/php-pdo/read.php">Liste des données</a>
-	<h1>Ajouter</h1>
+	<!--<a href="/php-pdo/read.php">Liste des données</a>-->
+	<h1>Ajouter une randonnée</h1>
 	<form action="" method="post">
 		<div>
 			<label for="name">Name</label>
@@ -18,11 +18,11 @@
 		<div>
 			<label for="difficulty">Difficulté</label>
 			<select name="difficulty">
-				<option value="très facile">Très facile</option>
-				<option value="facile">Facile</option>
-				<option value="moyen">Moyen</option>
-				<option value="difficile">Difficile</option>
-				<option value="très difficile">Très difficile</option>
+				<option value="très facile">très facile</option>
+				<option value="facile">facile</option>
+				<option value="moyen">moyen</option>
+				<option value="difficile">difficile</option>
+				<option value="très difficile">très difficile</option>
 			</select>
 		</div>
 		
@@ -50,16 +50,15 @@ if(isset($_POST['button'])) {
 	$duration = $_POST['duration'];
 	$height_difference = $_POST['height_difference'];
 
-	$req = $bdd->prepare('INSERT INTO hiking(name, difficulty, distance, duration, height_difference)
-						VALUES(:name, :difficulty, :distance, :duration, :height_difference)');
-	$req->execute(array(
-		'name' => $name,
-		'difficulty' => $difficulty,
-		'distance' => $distance,
-		'duration' => $duration,
-		'height_difference' => $height_difference
-	));
-	echo 'Le circuit de randonnée a bien été ajouté !';
+	$add = ORM::for_table('hiking')->create();
+	$add->name = $name;
+	$add->difficulty = $difficulty;
+	$add->distance = $distance;
+	$add->duration = $duration;
+	$add->height_difference = $height_difference;
+	$add->save();
+
+	echo'<script>alert(\'Le circuit de randonnée a bien été ajouté !\')</script>';
 }
 
 

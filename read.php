@@ -15,17 +15,30 @@
       <?php
 
     echo'<thead><tr><th>id</th><th>name</th><th>difficulty</th><th>distance</th><th>duration</th><th>height_difference</th></tr></thead>';
-    foreach($bdd->query('SELECT * FROM hiking') as $row) {
-        echo'<tbody><tr><td>'.$row['id'].'</td>
-            <td>'.utf8_encode($row['name']).'</td>
-            <td>'.utf8_encode($row['difficulty']).'</td>
-            <td>'.$row['distance'].'km</td>
-            <td>'.$row['duration'].'</td>
-            <td>'.$row['height_difference'].'m</td></tr></tbody>';
-    }
-    $bdd = null;
 
-?>
+    foreach(ORM::for_table('hiking')->find_result_set() as $row) {
+        $id = $row->id;
+        $name = $row->name;
+        $difficulty = $row->difficulty;
+        $distance = $row->distance;
+        $duration = $row->duration;
+        $height_difference = $row->height_difference;
+        echo'<tbody><tr><td>'.$id.'</td>
+            <td><a href="update.php?
+                id='.$id.'&
+                name='.$name.'&
+                difficulty='.$difficulty.'&
+                distance='.$distance.'&
+                duration='.$duration.'&
+                height_difference='.$height_difference.'">'.$name.'</a></td>
+            <td>'.$difficulty.'</td>
+            <td>'.$distance.'km</td>
+            <td>'.$duration.'</td>
+            <td>'.$height_difference.'m</td></tr></tbody>';
+    }
+
+
+    ?>
     </table>
   </body>
 </html>

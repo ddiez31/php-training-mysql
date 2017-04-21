@@ -18,26 +18,10 @@ include 'norefresh.php';
 
 <?php
 
-$user = 'root';
-$pass = '070401';
-
-try {
-    $bdd = new PDO('mysql:host=localhost;dbname=reunion_island',$user,$pass);
-} catch(PDOException$e) {
-    print "Erreur!:".$e->getMessage().'<br>';
-    die();
-}
 
 include 'read.php';
 
 echo '<hr>';
-
-try {
-    $bdd = new PDO('mysql:host=localhost;dbname=reunion_island',$user,$pass);
-} catch(PDOException$e) {
-    print "Erreur!:".$e->getMessage().'<br>';
-    die();
-}
 
 include 'create.php';
 
