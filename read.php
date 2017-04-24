@@ -14,7 +14,13 @@
       <!-- Afficher la liste des randonnées -->
       <?php
 
-    echo'<thead><tr><th>id</th><th>name</th><th>difficulty</th><th>distance</th><th>duration</th><th>height_difference</th></tr></thead>';
+      echo'<thead><tr>';
+        $table = ORM::for_table('hiking')->find_one();
+        foreach(array_keys($table->as_array()) as $column) {
+            $table->$column = NULL;
+            echo '<th>'.$column.'</th>';
+        }
+      echo'</tr></thead>';
 
     foreach(ORM::for_table('hiking')->find_result_set() as $row) {
         $id = $row->id;
@@ -23,20 +29,21 @@
         $distance = $row->distance;
         $duration = $row->duration;
         $height_difference = $row->height_difference;
+        $available = $row->available;
         echo'<tbody><tr><td>'.$id.'</td>
-            <td><a href="update.php?
-                id='.$id.'&
-                name='.$name.'&
-                difficulty='.$difficulty.'&
-                distance='.$distance.'&
-                duration='.$duration.'&
-                height_difference='.$height_difference.'">'.$name.'</a></td>
+            <td><a title="éditer" href="update.php?
+                id='.$id.'">'.$name.'
+                  </a><form action="delete.php?id='.$id.' " method="post"><button name="delete" type="submit" class="ui icon button mini" title="supprimer"><i class="remove circle icon"></i></button></form></td>
             <td>'.$difficulty.'</td>
             <td>'.$distance.'km</td>
             <td>'.$duration.'</td>
-            <td>'.$height_difference.'m</td></tr></tbody>';
+            <td>'.$height_difference.'m</td>
+            <td>'.$available.'</td></tr></tbody>';
     }
 
+      if(isset($_POST['delete'])) {
+        $id = $_POST['id'];  
+      }
 
     ?>
     </table>

@@ -38,7 +38,29 @@
 			<label for="height_difference">Dénivelé</label>
 			<input type="text" name="height_difference" value="">
 		</div>
+		<?php
+		echo '<div>
+			<label for="available">Sentier fermé pour cause</label>
+			<input type="text" name="available" value="">
+			</div>';
+		// if(isset($_POST['newInput'])) {
+		// 	$newName = $_POST['newName'];
+		// 	echo '<div>
+		// 		<label for="">'.$newName.'</label>
+		// 		<input type="text" name="'.$newName.'" value="">
+		// 		</div>';
+		// 	ORM::raw_execute('ALTER TABLE hiking ADD '.$newName.' VARCHAR(255) NOT NULL');
+		// }
+
+		?>
+
 		<button type="submit" name="button">Envoyer</button>
+		<!--<br>
+		<div>
+			<input type="text" name="newName" value="">
+			<button type="" name="newInput">Créer un champ</button>
+		</div>-->
+		
 	</form>
 
 <?php
@@ -49,6 +71,7 @@ if(isset($_POST['button'])) {
 	$distance = $_POST['distance'];
 	$duration = $_POST['duration'];
 	$height_difference = $_POST['height_difference'];
+	$available = $_POST['available'];
 
 	$add = ORM::for_table('hiking')->create();
 	$add->name = $name;
@@ -56,6 +79,7 @@ if(isset($_POST['button'])) {
 	$add->distance = $distance;
 	$add->duration = $duration;
 	$add->height_difference = $height_difference;
+	$add->available = $available;
 	$add->save();
 
 	echo'<script>alert(\'Le circuit de randonnée a bien été ajouté !\')</script>';

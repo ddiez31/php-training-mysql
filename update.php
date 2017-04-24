@@ -17,14 +17,17 @@ include 'norefresh.php';
 
 	<?php
 	$id = $_GET['id'];
-	$name = $_GET['name'];
-	$difficulty = $_GET['difficulty'];
-	$distance = $_GET['distance'];
-	$duration = $_GET['duration'];
-	$height_difference = $_GET['height_difference'];
+	$hiking = ORM::for_table('hiking')->where('id', $id)->find_many();
+	foreach($hiking as $value) {
+		$name = $value['name'];
+		$difficulty = $value['difficulty'];
+		$distance = $value['distance'];
+		$duration = $value['duration'];
+		$height_difference = $value['height_difference'];
+		$available = $value['available'];
+	}
 	?>
 	
-	<!--<a href="/php-pdo/read.php">Liste des données</a>-->
 	<h1>Modifier une randonnée</h1>
 	<form action="" method="post">
 		<div>
@@ -35,41 +38,11 @@ include 'norefresh.php';
 		<div>
 			<label for="difficulty">Difficulté</label>
 			<select name="difficulty">
-				<?php
-					switch($difficulty) {
-						case "très facile":
-							echo '<option selected value="très facile">très facile</option>
-							<option value="facile">facile</option>
-							<option value="moyen">moyen</option>
-							<option value="difficile">difficile</option>
-							<option value="très difficile">très difficile</option>'; break;
-						case "facile":
-							echo '<option value="très facile">très facile</option>
-							<option selected value="facile">facile</option>
-							<option value="moyen">moyen</option>
-							<option value="difficile">difficile</option>
-							<option value="très difficile">très difficile</option>'; break;
-						case "moyen":
-							echo '<option value="très facile">très facile</option>
-							<option value="facile">facile</option>
-							<option selected value="moyen">moyen</option>
-							<option value="difficile">difficile</option>
-							<option value="très difficile">très difficile</option>'; break;
-						case "difficile":
-							echo '<option value="très facile">très facile</option>
-							<option value="facile">facile</option>
-							<option value="moyen">moyen</option>
-							<option selected value="difficile">difficile</option>
-							<option value="très difficile">très difficile</option>'; break;
-						case "très difficile":
-							echo '<option value="très facile">très facile</option>
-							<option value="facile">facile</option>
-							<option value="moyen">moyen</option>
-							<option value="difficile">difficile</option>
-							<option selected value="très difficile">très difficile</option>'; break;
-					}
-
-				?>
+				<option value="très facile" <?php if($difficulty == 'très facile') { echo 'selected'; } ?>>très facile</option>
+				<option value="facile" <?php if($difficulty == 'facile') { echo 'selected'; } ?>>facile</option>
+				<option value="moyen" <?php if($difficulty == 'moyen') { echo 'selected'; } ?>>moyen</option>
+				<option value="difficile" <?php if($difficulty == 'difficile') { echo 'selected'; } ?>>difficile</option>
+				<option value="très difficile" <?php if($difficulty == 'très difficile') { echo 'selected'; } ?>>très difficile</option>
 			</select>
 		</div>
 		
@@ -85,6 +58,12 @@ include 'norefresh.php';
 			<label for="height_difference">Dénivelé</label>
 			<input type="text" name="height_difference" value="<?php echo $height_difference; ?>">
 		</div>
+			<?php
+			echo '<div>
+				<label for="available">Sentier fermé pour cause</label>
+				<input type="text" name="available" value="'.$available.'">
+				</div>';
+			?>
 		<button type="submit" name="button">Modifier</button>
 	</form>
 
@@ -96,6 +75,7 @@ if(isset($_POST['button'])) {
 	$distance = $_POST['distance'];
 	$duration = $_POST['duration'];
 	$height_difference = $_POST['height_difference'];
+	$available = $_POST['available'];
 
 	$update = ORM::for_table('hiking')->find_one($id);
 	$update->set(array(
@@ -103,7 +83,8 @@ if(isset($_POST['button'])) {
    		'difficulty'  => $difficulty,
 		'distance'  => $distance,
 		'duration'  => $duration,
-		'height_difference'  => $diheight_differencefficulty
+		'height_difference'  => $height_difference,
+		'available'  => $available
 	));
 	$update->save();
 
@@ -112,6 +93,9 @@ if(isset($_POST['button'])) {
 
 
 ?>
+	<hr>
+	<a href="/">Retour liste des randonnées</a>
+
 
 </body>
 </html>
