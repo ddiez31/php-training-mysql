@@ -23,8 +23,8 @@ if(isset($_SESSION['sauvegarde'])) {
 };
 // } Fin - Seconde partie
 
-$user = 'root';
-$pass = '070401';
+$user = '****';
+$pass = '****';
 
 ORM::configure(array(
     'connection_string' => 'mysql:host=localhost;dbname=reunion_island',
